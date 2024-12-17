@@ -1,3 +1,4 @@
+import React from "react";
 import "./Recent Products Page.css";
 
 const dummyRecentProducts = [

@@ -1,12 +1,9 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./Home_page.css";
 import { useGetAllCarsQuery } from "../../../../../redux/api/CarManagemntApi/carManagementApi";
-
-import { useNavigate } from "react-router-dom";
-import { CarTypes } from "../../../../../types/CarTypes";
-import pic from "./1.jpg";
+import { useAppSelector } from "../../../../../redux/hooks";
+import { selectCarUser } from "../../../../../redux/features/carAuthSlice";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 // const addToCart = async (
 //   userId: any,
@@ -48,21 +45,6 @@ import pic from "./1.jpg";
 //     return null;
 //   }
 // };
-// export interface CarType {
-//   _id: string;
-//   productName: string;
-//   price: number;
-//   detailsDescription: string;
-//   imageUrl: string;
-//   productCategory: string;
-//   shopId: string;
-//   vendorId: string;
-//   numberOFRatings: number;
-//   isDeleted: boolean;
-//   createdAt: string;
-//   updatedAt: string;
-//   __v: number;
-// }
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -75,14 +57,22 @@ const HomePage = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [searchKeyword, setSearchKeyword] = useState("");
   const [priceRange, setPriceRange] = useState({ min: 0, max: 100 });
-  const [filteredProducts, setFilteredProducts] = useState<CarTypes[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
   const filterProducts = () => {
     if (!carsData?.data) return;
 
-    const filtered = carsData.data;
-    console.log("filtered");
-    console.log(filtered);
+    const filtered = carsData.data.filter((product: any) => {
+      const matchesCategory = selectedCategory
+        ? product.productCategory === selectedCategory
+        : true;
+      const matchesKeyword = product.productName
+        .toLowerCase()
+        .includes(searchKeyword.toLowerCase());
+      const matchesPrice =
+        product.price >= priceRange.min && product.price <= priceRange.max;
+      return matchesCategory && matchesKeyword && matchesPrice;
+    });
 
     setFilteredProducts(filtered);
   };
@@ -176,7 +166,7 @@ const HomePage = () => {
         {filteredProducts.map((product: any) => (
           <div key={product._id} className="product-card">
             <img
-              src={pic}
+              src={product.imageUrl || "https://via.placeholder.com/150"}
               alt={product.productName}
               className="product-image"
             />

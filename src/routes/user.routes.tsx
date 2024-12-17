@@ -1,6 +1,6 @@
-import COrderHistory from "../pages/HomePage/Navbar/a9/COrder History/COrder History";
 import RecentProducts from "../pages/HomePage/Navbar/a9/Recent Products Page/Recent Products Page";
-
+import MyAllBookings from "../pages/UserInfoPage/MyAllBookings";
+import UserDashboard from "../tempCompo/UserDashboard";
 export const userPaths = [
   {
     name: "Recent Products",
@@ -8,8 +8,8 @@ export const userPaths = [
     element: <RecentProducts />,
   },
   {
-    name: "COrderHistory",
-    path: "COrderHistory",
-    element: <COrderHistory />,
+    name: "My All Bookings",
+    path: "my-all-bookings",
+    element: <MyAllBookings />,
   },
 ];

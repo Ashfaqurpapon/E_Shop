@@ -5,19 +5,18 @@ import { selectCurrentUser, TUser } from "../../redux/features/carAuthSlice";
 import { adminPaths } from "../../routes/admin.routes";
 import { userPaths } from "../../routes/user.routes";
 import { sidebarItemsGenerator } from "../../utils/sidebarItemsGenerator";
-import { vendorPaths } from "../../routes/vendor.routes";
 
 const { Sider } = Layout;
 
 const userRole = {
   ADMIN: "admin",
   USER: "user",
-  VENDOR: "vendor",
 };
 
 const Sidebar = () => {
   const user = useAppSelector(selectCurrentUser);
-
+  console.log("Limon callll");
+  console.log(user);
   // if (!user) {
   //   return null;
   // }
@@ -33,9 +32,6 @@ const Sidebar = () => {
       break;
     case userRole.USER:
       sidebarItems = sidebarItemsGenerator(userPaths, userRole.USER);
-      break;
-    case userRole.VENDOR:
-      sidebarItems = sidebarItemsGenerator(vendorPaths, userRole.VENDOR);
       break;
 
     default:

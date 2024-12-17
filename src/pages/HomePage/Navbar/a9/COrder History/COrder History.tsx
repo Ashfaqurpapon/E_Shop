@@ -1,79 +1,65 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { useEffect, useState } from "react";
-import { useAppSelector } from "../../../../../redux/hooks";
-import { selectCarUser } from "../../../../../redux/features/carAuthSlice";
+import React from "react";
 import "./COrder History.css";
-// Order interface
-interface Order {
-  isPaid: boolean;
-  _id: string;
-  userId: string;
-  shopId: string;
-  vendorId: string;
-  NumberOfProducts: number;
-  TotalAmount: number;
-  createdAt: string;
-  updatedAt: string;
-}
+
+const dummyCustomerOrders = [
+  {
+    id: 101,
+    items: [
+      { name: "Product X", quantity: 1, price: 100 },
+      { name: "Product Y", quantity: 2, price: 50 },
+    ],
+    total: 200,
+    date: "2024-12-05",
+    status: "Delivered",
+  },
+  {
+    id: 102,
+    items: [{ name: "Product Z", quantity: 1, price: 150 }],
+    total: 150,
+    date: "2024-12-04",
+    status: "Shipped",
+  },
+  {
+    id: 103,
+    items: [
+      { name: "Product A", quantity: 3, price: 30 },
+      { name: "Product B", quantity: 1, price: 25 },
+    ],
+    total: 115,
+    date: "2024-12-03",
+    status: "Pending",
+  },
+];
 
 const COrderHistory = () => {
-  const carUser = useAppSelector(selectCarUser);
-  const [orders, setOrders] = useState<Order[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string>("");
-
-  const fetchOrderHistory = async () => {
-    try {
-      const response = await fetch(
-        `http://localhost:8000/api/orderHistory/get-user-full-OrderHistory/${carUser?._id}`
-      );
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch orders");
-      }
-
-      const data = await response.json();
-      setOrders(data.data);
-    } catch (err: any) {
-      setError("Unable to fetch orders. Try again.");
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    if (carUser?._id) fetchOrderHistory();
-  }, [carUser]);
-
   return (
-    <div className="order-history-container">
-      <h1>Order History</h1>
+    <div className="order-history">
+      <h1 className="heading">My Order History</h1>
 
-      {loading ? (
-        <p className="loading">Loading...</p>
-      ) : error ? (
-        <p className="error">{error}</p>
-      ) : orders.length === 0 ? (
-        <p className="error">No orders found.</p>
-      ) : (
-        <div className="order-list">
-          {orders.map((order) => (
-            <div key={order._id} className="order-card">
-              <p className="order-id">Order ID: {order._id}</p>
-              <p>Number of Products: {order.NumberOfProducts}</p>
-              <p className="order-total">Total Amount: ${order.TotalAmount}</p>
-              <p className="order-date">
-                Order Date: {new Date(order.createdAt).toLocaleDateString()}
-              </p>
-              <p className={`order-paid ${order.isPaid ? "" : "unpaid"}`}>
-                Status: {order.isPaid ? "Paid" : "Unpaid"}
-              </p>
+      <div className="order-list">
+        {dummyCustomerOrders.map((order) => (
+          <div key={order.id} className="order-card">
+            <h2 className="order-id">Order ID: {order.id}</h2>
+            <p className="order-date">Date: {order.date}</p>
+            <p className={`order-status ${order.status.toLowerCase()}`}>
+              Status: {order.status}
+            </p>
+
+            <div className="order-items">
+              <h3>Items:</h3>
+              <ul>
+                {order.items.map((item, index) => (
+                  <li key={index} className="order-item">
+                    {item.name} - {item.quantity} x ${item.price}
+                  </li>
+                ))}
+              </ul>
             </div>
-          ))}
-        </div>
-      )}
+
+            <p className="order-total">Total: ${order.total}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
