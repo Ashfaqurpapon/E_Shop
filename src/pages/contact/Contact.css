@@ -1,0 +1,51 @@
+/* Contact.css */
+
+.contact-container {
+  padding: 50px;
+  margin: auto;
+  max-width: 800px;
+  text-align: center;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: "Arial", sans-serif;
+}
+
+.section-title1 {
+  font-size: 32px;
+  color: #e91e63;
+  margin-bottom: 30px;
+  font-weight: bold;
+}
+
+.contact-info {
+  font-size: 18px;
+  line-height: 1.8;
+  color: #555;
+}
+
+.contact-item {
+  margin: 15px 0;
+}
+
+.contact-item strong {
+  color: #2c3e50; /* Deep Pink color for labels */
+}
+
+.contact-container p {
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .contact-container {
+    padding: 30px;
+  }
+
+  .section-title {
+    font-size: 28px;
+  }
+
+  .contact-info {
+    font-size: 16px;
+  }
+}

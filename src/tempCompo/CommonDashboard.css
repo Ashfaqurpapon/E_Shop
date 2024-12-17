@@ -1,0 +1,33 @@
+/* CommonDashboard.css */
+
+.common-dashboard {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.common-dashboard h1.title {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.common-dashboard h1 {
+  font-size: 1.25rem;
+
+  margin: 0.5rem 0;
+}
+
+.common-dashboard h1 span {
+  color: #007bff;
+  font-weight: 600;
+}
+.dippink {
+  font-size: 32px;
+  color: #e91e63;
+  margin-bottom: 30px;
+  font-weight: bold;
+}

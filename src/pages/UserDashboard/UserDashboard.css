@@ -1,0 +1,61 @@
+/* UserDashboard.css */
+
+.user-dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.dashboard-title {
+  text-align: center;
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.personal-info-section,
+.booking-history-section {
+  margin-bottom: 40px;
+}
+
+.personal-info-section h2,
+.booking-history-section h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.personal-info-section p,
+.booking-item p {
+  font-size: 18px;
+  margin: 5px 0;
+}
+
+.update-button,
+.cancel-button {
+  padding: 10px 15px;
+  margin-top: 10px;
+  font-size: 16px;
+  color: white;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.update-button:hover,
+.cancel-button:hover {
+  background-color: #0056b3;
+}
+
+.bookings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.booking-item {
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 5px;
+  background-color: #f8f9fa;
+}

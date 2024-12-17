@@ -1,0 +1,166 @@
+/* Container for the About Us page */
+.about-us-container {
+  margin: auto;
+  padding-top: 140px;
+  padding-bottom: 40px;
+  max-width: 1200px;
+  font-family: "Roboto", sans-serif;
+  background: #f5f5f5;
+  color: #333;
+}
+
+/* Section titles */
+.section-title {
+  font-size: 32px;
+  margin-bottom: 30px;
+  text-align: center;
+  color: #34495e;
+  font-weight: bold;
+  text-transform: uppercase;
+  position: relative;
+}
+
+.section-title::after {
+  content: "";
+  width: 60px;
+  height: 3px;
+  background: #e74c3c;
+  display: block;
+  margin: 10px auto 0;
+}
+
+/* Specific color class for the About Us title */
+.deeppink {
+  color: #e91e63;
+}
+
+/* General styling for each section */
+.company-overview,
+.team-section,
+.car-variety-section,
+.commitment-section,
+.contact-section {
+  margin-bottom: 50px;
+  background: #fff;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling for text content */
+.company-description,
+.company-mission,
+.company-vision,
+.car-variety-description,
+.commitment-description,
+.contact-info {
+  margin-bottom: 15px;
+  font-size: 18px;
+  line-height: 1.8;
+}
+
+/* Team section styling */
+.team-section {
+  text-align: center;
+}
+
+.team-profiles {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.team-member {
+  flex: 1;
+  max-width: 250px;
+  text-align: center;
+  transition: transform 0.3s ease-in-out;
+}
+
+.team-member:hover {
+  transform: translateY(-10px);
+}
+
+.team-photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+  object-fit: cover;
+}
+
+.team-name {
+  font-size: 22px;
+  margin: 10px 0 5px;
+  color: #2c3e50;
+  font-weight: bold;
+}
+
+.team-role {
+  font-size: 16px;
+  color: #7f8c8d;
+}
+
+/* Car variety section styling */
+.car-variety-section {
+  text-align: center;
+}
+
+.car-variety-description {
+  font-size: 18px;
+  line-height: 1.8;
+  margin-bottom: 25px;
+  color: #555;
+}
+
+.car-types-list {
+  list-style: none;
+  padding: 0;
+  font-size: 18px;
+  color: #34495e;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.car-types-list li {
+  background: #e74c3c;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 20px;
+  margin: 5px 0;
+  transition: background 0.3s ease-in-out;
+}
+
+.car-types-list li:hover {
+  background: #c0392b;
+}
+
+/* Commitment section styling */
+.commitment-section .commitment-description {
+  font-size: 18px;
+  line-height: 1.8;
+  text-align: center;
+  color: #555;
+}
+
+/* Contact section styling */
+.contact-section {
+  text-align: center;
+}
+
+.contact-info {
+  font-size: 18px;
+  line-height: 1.8;
+  color: #555;
+  background: #ecf0f1;
+  padding: 20px;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+.contact-info strong {
+  color: #2c3e50;
+}

@@ -1,0 +1,113 @@
+/* BookingCar.css */
+
+.booking-car-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.booking-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.booking-submit-btn {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.booking-submit-btn:hover {
+  background-color: #0056b3;
+}
+
+.available-cars {
+  margin-top: 30px;
+}
+
+.available-cars h3 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.cars-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.car-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  width: 250px;
+  text-align: center;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.car-card img {
+  width: 100%;
+  height: auto;
+  border-bottom: 1px solid #ddd;
+}
+
+.car-card h4 {
+  margin: 10px 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.car-card p {
+  margin: 5px 0;
+  color: #666;
+}
+
+.price {
+  font-size: 18px;
+  font-weight: bold;
+  color: #007bff;
+}
+
+.book-now-btn {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.book-now-btn:hover {
+  background-color: #218838;
+}
