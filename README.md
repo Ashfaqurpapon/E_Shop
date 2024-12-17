@@ -5,7 +5,7 @@ The **E-Commerce Application** is a comprehensive platform that provides a seaml
 # Live Link
 
 
-The live version of the Car Rental Reservation System can be accessed at: https://car-rental-reseration-system-iepw.vercel.app/
+The live version of the E_Shop Application can be accessed at: https://eshop-dun-five.vercel.app/
 
 ## Table of Contents
 - [Overview](#overview)
