@@ -20,6 +20,10 @@ const SignUpPage = () => {
       value: "admin",
       label: "Admin",
     },
+    {
+      value: "vendor",
+      label: "Vendor",
+    },
   ];
 
   const onSubmit = async (data: FieldValues) => {

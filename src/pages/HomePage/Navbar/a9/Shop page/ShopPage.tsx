@@ -1,7 +1,5 @@
-import { Layout } from "antd";
 import "./Shop_page.css"; // Import CSS for styling
-import Sidebar from "../../../../../PHForm/layout/Sidebar";
-import NavbarUp from "../../NavbarUp/NavbarUp";
+
 import { useLocation } from "react-router-dom";
 
 // Dummy data for vendor and products

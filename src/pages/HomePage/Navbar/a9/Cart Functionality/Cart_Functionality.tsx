@@ -1,22 +1,81 @@
-import React, { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useState } from "react";
 import "./Cart_Functionality.css";
 import Sidebar from "../../../../../PHForm/layout/Sidebar";
 import NavbarUp from "../../NavbarUp/NavbarUp";
-import { Layout } from "antd";
-const dummyCartProducts = [
-  { id: 1, name: "Product A", price: 15, quantity: 2 },
-  { id: 2, name: "Product B", price: 25, quantity: 1 },
-  { id: 3, name: "Product C", price: 20, quantity: 3 },
-];
+import { Layout, message } from "antd";
+import { useAppSelector } from "../../../../../redux/hooks";
+import { selectCarUser } from "../../../../../redux/features/carAuthSlice";
+import { useNavigate } from "react-router-dom";
+
+interface CartProduct {
+  id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  imageUrl: string;
+}
 
 const Cart = () => {
-  const [cart, setCart] = useState(dummyCartProducts);
+  const navigate = useNavigate();
+  const carUser = useAppSelector(selectCarUser);
+  const [cart, setCart] = useState<CartProduct[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
+  // Function to fetch cart items for the current user
+  const fetchCartItems = async () => {
+    if (!carUser?._id) return;
+
+    try {
+      const response = await fetch(
+        `https://productsweb.vercel.app/api/cart/get-All-userAddedProducts/${carUser._id}`
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch cart items");
+      }
+
+      const data = await response.json();
+      console.log("cart");
+      //console.log(data);
+
+      // Transform the response into CartProduct format
+      const transformedCart = data.data.map((item: any) => ({
+        id: item._id, // Cart entry ID
+        name: item.productId.productName, // Product name
+        price: item.productId.price, // Product price
+        quantity: item.numberOfCounts, // Quantity
+        imageUrl: item.productId.imageUrl, // Product image
+      }));
+      console.log(transformedCart);
+
+      setCart(transformedCart);
+      setLoading(false);
+    } catch (error) {
+      console.error("Error fetching cart items:", error);
+      message.error("Failed to load cart items. Please try again.");
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCartItems();
+  }, [carUser]);
+
+  // Calculate total cost
   const calculateTotal = () => {
     return cart.reduce(
       (total, product) => total + product.price * product.quantity,
       0
     );
+  };
+  const totalPrice = calculateTotal().toFixed(2);
+
+  const goToCheckOutPage = (totalPrice: any) => {
+    navigate("/CheckOut", {
+      state: { totalPrice },
+    });
   };
 
   return (
@@ -26,23 +85,45 @@ const Cart = () => {
       <div className="cart-container">
         <h1 className="cart-heading">Your Cart</h1>
 
-        <div className="cart-items">
-          {cart.map((product) => (
-            <div key={product.id} className="cart-item">
-              <h2 className="cart-item-name">{product.name}</h2>
-              <p className="cart-item-price">Price: ${product.price}</p>
-              <p className="cart-item-quantity">Quantity: {product.quantity}</p>
-              <p className="cart-item-total">
-                Subtotal: ${product.price * product.quantity}
-              </p>
+        {loading ? (
+          <p>Loading cart items...</p>
+        ) : cart.length > 0 ? (
+          <>
+            <div className="cart-items">
+              {cart.map((product) => (
+                <div key={product.id} className="cart-item">
+                  <img
+                    src={product.imageUrl}
+                    alt={product.name}
+                    className="cart-item-image"
+                  />
+                  <div className="cart-item-details">
+                    <h2 className="cart-item-name">{product.name}</h2>
+                    <p className="cart-item-price">Price: ${product.price}</p>
+                    <p className="cart-item-quantity">
+                      Quantity: {product.quantity}
+                    </p>
+                    <p className="cart-item-total">
+                      Subtotal: ${product.price * product.quantity}
+                    </p>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
 
-        <div className="cart-summary">
-          <h2>Total Cost: ${calculateTotal()}</h2>
-          <button className="checkout-button">Proceed to Checkout</button>
-        </div>
+            <div className="cart-summary">
+              <h2>Total Cost: ${totalPrice}</h2>
+              <button
+                className="checkout-button"
+                onClick={() => goToCheckOutPage(totalPrice)}
+              >
+                Proceed to Checkout
+              </button>
+            </div>
+          </>
+        ) : (
+          <p>Your cart is empty.</p>
+        )}
       </div>
     </Layout>
   );

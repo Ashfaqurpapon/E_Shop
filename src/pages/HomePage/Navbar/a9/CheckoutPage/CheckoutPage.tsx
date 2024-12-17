@@ -1,13 +1,19 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./CheckoutPage.css";
 import { useAppSelector } from "../../../../../redux/hooks";
 import { selectCarUser } from "../../../../../redux/features/carAuthSlice";
 
+import { useLocation } from "react-router-dom";
+
 const CheckoutPage = () => {
   const carUser = useAppSelector(selectCarUser);
   const [couponCode, setCouponCode] = useState("");
+  const location = useLocation();
+  const { totalPrice } = location.state;
   const [discount, setDiscount] = useState(0);
-  const [totalPrice, setTotalPrice] = useState(100); // Dummy total price
+  console.log(totalPrice);
+
+  //const [totalPrice, setTotalPrice] = useState(100); // Dummy total price
 
   const handleApplyCoupon = () => {
     if (couponCode === "DISCOUNT10") {
@@ -31,7 +37,43 @@ const CheckoutPage = () => {
       paymentMethod: method,
     };
 
-    console.log("Sending Payment Data:", paymentData);
+    initiatePayment(paymentData.userId);
+  };
+
+  // TODO LIMON : this function is not good. we should send reqeust through redux api
+  const initiatePayment = async (userId: string) => {
+    const requestBody = {
+      // Replace with the actual payload expected by your API
+      shopId: "675d5835463eefa480524993",
+      vendorId: "675d5835463eefa480524993",
+      TotalAmount: totalPrice,
+      NumberOfProducts: 2,
+      // currency: "USD",
+      // description: "Payment for Order #12345",
+    };
+
+    try {
+      const response = await fetch(
+        `https://productsweb.vercel.app/api/payment/initiatePayment/${userId}`,
+        {
+          method: "POST", // POST request
+          headers: {
+            "Content-Type": "application/json",
+            // Add authorization headers if needed, e.g., "Authorization": "Bearer YOUR_TOKEN"
+          },
+          body: JSON.stringify(requestBody), // Convert the payload to JSON
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+      window.location.href = data.data.payment_url;
+    } catch (error) {
+      console.error("Error initiating payment:", error);
+    }
   };
 
   return (

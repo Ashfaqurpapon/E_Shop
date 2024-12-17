@@ -12,11 +12,13 @@ import CarDetailsPage from "../pages/Car Details Page/CarDetailsPage";
 import Navbar from "../pages/HomePage/Navbar/Navbar";
 import CarListingPage from "../pages/Car Listing Page/CarListingPage/CarListingPage";
 import Contact from "../pages/contact/Contact";
-import UpdateCar from "../pages/CarPage/UpdateCar";
 import Cart from "../pages/HomePage/Navbar/a9/Cart Functionality/Cart_Functionality";
+import { vendorPaths } from "./vendor.routes";
 import ShopPage from "../pages/HomePage/Navbar/a9/Shop page/ShopPage";
-import ProductListPage from "../pages/HomePage/Navbar/a9/Product details page/Product_details";
+
 import ProductDetailsPage from "../pages/HomePage/Navbar/a9/Product details page/Product_details";
+
+import CheckoutPage from "../pages/HomePage/Navbar/a9/CheckoutPage/CheckoutPage";
 
 const router = createBrowserRouter([
   {
@@ -40,6 +42,15 @@ const router = createBrowserRouter([
       </ProtectedRoute>
     ),
     children: routeGenerator(userPaths),
+  },
+  {
+    path: "/vendor",
+    element: (
+      <ProtectedRoute role="vendor">
+        <App />
+      </ProtectedRoute>
+    ),
+    children: routeGenerator(vendorPaths),
   },
   {
     path: "/signUp",
@@ -88,6 +99,10 @@ const router = createBrowserRouter([
   {
     path: "/ShopPage",
     element: <ShopPage />,
+  },
+  {
+    path: "/CheckOut",
+    element: <CheckoutPage />,
   },
 ]);
 export default router;

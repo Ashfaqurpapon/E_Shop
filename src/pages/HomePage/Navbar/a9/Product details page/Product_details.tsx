@@ -1,57 +1,65 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useLocation, useNavigate } from "react-router-dom";
 import "./ProductListPage.css.css";
-import { Layout } from "antd";
+import { Layout, message } from "antd"; // Added Ant Design message for notifications
 import Sidebar from "../../../../../PHForm/layout/Sidebar";
 import NavbarUp from "../../NavbarUp/NavbarUp";
+import { useAppSelector } from "../../../../../redux/hooks";
+import { selectCarUser } from "../../../../../redux/features/carAuthSlice";
 
 // Dummy data for products
-const dummyProducts = [
-  {
-    _id: "1",
-    name: "Product 1",
-    description: "This is a detailed description of Product 1.",
-    image: "https://via.placeholder.com/150",
-    price: 99.99,
-    category: "Electronics",
-    reviews: [
-      { user: "John Doe", rating: 5, comment: "Amazing product!" },
-      { user: "Jane Smith", rating: 4, comment: "Very good quality." },
-    ],
-  },
-  {
-    _id: "2",
-    name: "Product 2",
-    description: "This is a detailed description of Product 2.",
-    image: "https://via.placeholder.com/150",
-    price: 49.99,
-    category: "Home Appliances",
-    reviews: [
-      { user: "Alice Brown", rating: 4, comment: "Works as expected." },
-      { user: "Bob White", rating: 3, comment: "Decent for the price." },
-    ],
-  },
-];
 
 const ProductDetailsPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { product } = location.state || {};
-  //console.log("product");
-  // console.log(product);
+  console.log(product);
+
+  const carUser = useAppSelector(selectCarUser);
 
   if (!product) {
     return <div>Product data not found!</div>; // Fallback if no product data is available
   }
-  const goToShopPage = (product: any) => {
-    //console.log(product);
 
-    navigate("/ShopPage", { state: { product } });
+  // Function to handle Add to Cart functionality
+  const addProductOnCart = async (product: any) => {
+    const payload = {
+      userId: carUser?._id,
+      productId: product._id,
+      shopId: product.shopId,
+      vendorId: product.vendorId,
+      numberOfCounts: 1,
+    };
+
+    try {
+      const response = await fetch(
+        "https://productsweb.vercel.app/api/cart/add-to-card",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to add product to cart.");
+      }
+
+      const data = await response.json();
+      message.success("Product added to cart successfully!");
+      console.log("Server Response:", data);
+      navigate("/home");
+    } catch (error) {
+      //console.error("Error:", error.message);
+      message.error("Failed to add product to cart. Please try again.");
+    }
   };
 
   return (
     <Layout style={{ height: "100vh" }}>
       <Sidebar />
-
       <NavbarUp />
       <div className="product-details-page">
         <h1 className="product-title">{product.productName}</h1>
@@ -63,7 +71,7 @@ const ProductDetailsPage = () => {
           />
           <div className="product-info">
             <p className="product-category">
-              Category: {product.Category || "N/A"}
+              Category: {product.category || "N/A"}
             </p>
             <p className="product-description">
               {product.detailsDescription || "No description available."}
@@ -86,9 +94,9 @@ const ProductDetailsPage = () => {
             </div>
             <button
               className="add-to-cart-btn"
-              onClick={() => goToShopPage(product)}
+              onClick={() => addProductOnCart(product)}
             >
-              Shop Name
+              Add To Cart
             </button>
           </div>
         </div>
